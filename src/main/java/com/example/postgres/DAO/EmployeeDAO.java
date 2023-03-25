@@ -1,7 +1,5 @@
 package com.example.postgres.DAO;
 
-
-
 import com.example.postgres.Employee;
 import com.example.postgres.City;
 
@@ -14,7 +12,8 @@ public interface EmployeeDAO {
 
     List<Employee> getAllEmployees ();
 
-    void updateEmployeeById (int id, String first_name, String last_name, String gender, int age, int city_id);
 
-    void deleteById (int id);
+    void updateEmployeeById(Employee employee);
+
+    void deleteById(Employee employee);
 }

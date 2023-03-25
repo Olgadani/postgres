@@ -30,23 +30,17 @@ public class Main {
                         + "Город - " + resultSet.getString("city_name") + ".");
             }
 
-            EmployeeDAO employeeDAO = new EmployeeDAOImpl(connection);
+            EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
             City city = new City(1, "Самара");
-            Employee employee = new Employee("Валерия", "Минаева", "female", 36, city);
-
+            Employee employee = new Employee("Валерия", "Минаева", "female", 36, 1 );
             employeeDAO.addEmployee(employee);
 
             System.out.println(employeeDAO.getById(2));
 
-            List<Employee> list = new ArrayList<>(employeeDAO.getAllEmployees());
-            for(Employee empl : list){
-                System.out.println(empl);
-            }
 
-            employeeDAO.updateEmployeeById(3, "Степан", "Логинов", "male", 49, 2);
 
-            employeeDAO.deleteById(4);
         }
     }
+
 }
