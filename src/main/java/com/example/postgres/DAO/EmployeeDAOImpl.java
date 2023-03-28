@@ -1,16 +1,15 @@
 package com.example.postgres.DAO;
+import com.example.postgres.City;
 import com.example.postgres.Employee;
 import com.example.postgres.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.*;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    private Connection connection;
     public EmployeeDAOImpl() {
-        this.connection = connection;
+
     }
 
     @Override
@@ -25,7 +24,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public Employee getById(int id)  {
+    public Employee getById(Integer id)  {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
     }
 
@@ -37,7 +36,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public void updateEmployeeById(Employee employee) {
+    public void updateEmployeeById(Integer id, String first_name, String last_name, String gender, int age, City city) {
+        Employee employee = new Employee(id, first_name, last_name, gender, age, city);
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
             Transaction transaction = session.beginTransaction();
             session.update(employee);

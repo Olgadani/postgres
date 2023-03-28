@@ -7,23 +7,24 @@ import java.util.Objects;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    @Column(name = "first_name")
+    @Column(name = "id", unique = true, updatable = false)
+    private Integer id;
+    @Column(name = "first_name", nullable = false, length = 50)
     private String first_name;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, length = 50)
     private String last_name;
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false, length = 6)
     private String gender;
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private int age;
-    @Column(name = "city")
-    private int city;
+    @JoinColumn(name = "city_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private City city;
 
-    public Employee() {
+    public Employee(Integer id, String first_name, String last_name, String gender, int age, City city) {
     }
 
-    public Employee(String first_name, String last_name, String gender, int age, int city) {
+    public Employee(String first_name, String last_name, String gender, int age, City city) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -31,13 +32,17 @@ public class Employee {
         this.city = city;
     }
 
-    public Employee(int id, String first_name, String last_name, String gender, int age, int city) {
+    public Employee(int id, String first_name, String last_name, String gender, int age, City city) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.age = age;
         this.city = city;
+    }
+
+    public Employee() {
+
     }
 
     public int getId() {
@@ -81,10 +86,10 @@ public class Employee {
     }
 
     public int getCity() {
-        return city;
+        return city.getCity_id();
     }
 
-    public void setCity(int city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -93,7 +98,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id;
+        return Objects.equals(id, employee.id);
     }
 
     @Override
